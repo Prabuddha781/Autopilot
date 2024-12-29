@@ -57,14 +57,19 @@ if __name__ == "__main__":
     # Load, shuffle, split
     features, labels = loadFromPickle()
     features, labels = shuffle(features, labels)
-    print(features[0].shape, features[0])
-    train_x, test_x, train_y, test_y = train_test_split(
-        features, labels, random_state=0, test_size=0.3
+
+    train_x_ori, test_x, train_y_ori, test_y = train_test_split(
+        features, labels, random_state=0, test_size=0.1
+    )
+    train_x, val_x, train_y, val_y = train_test_split(
+        train_x_ori, train_y_ori, random_state=0, test_size=0.2
     )
 
     train_x = torch.from_numpy(np.array([transpose_data(x) for x in train_x])).float()
+    val_x   = torch.from_numpy(np.array([transpose_data(x) for x in val_x])).float()
     test_x  = torch.from_numpy(np.array([transpose_data(x) for x in test_x])).float()
     train_y = torch.from_numpy(train_y).float()
+    val_y   = torch.from_numpy(val_y).float()
     test_y  = torch.from_numpy(test_y).float()
 
     # # Reshape: (N, C, H, W) for PyTorch
@@ -78,8 +83,10 @@ if __name__ == "__main__":
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
+    val_data   = TensorDataset(val_x, val_y)
     train_loader = DataLoader(train_data, batch_size=3000, shuffle=True)
     test_loader  = DataLoader(test_data, batch_size=3000)
+    val_loader   = DataLoader(val_data, batch_size=3000)
 
     # Model setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -107,13 +114,21 @@ if __name__ == "__main__":
         model.eval()
         val_loss = 0.0
         with torch.no_grad():
-            for x_batch, y_batch in test_loader:
+            for x_batch, y_batch in val_loader:
                 x_batch, y_batch = x_batch.to(device), y_batch.to(device)
                 outputs = model(x_batch).view(-1)
                 val_loss += criterion(outputs, y_batch).item()
-        val_loss /= len(test_loader)
+        val_loss /= len(val_loader)
         print(f"Epoch {epoch+1}, Validation Loss: {val_loss:.4f}")
 
+    test_loss = 0.0
+    with torch.no_grad():
+        for x_batch, y_batch in test_loader:
+            x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+            outputs = model(x_batch).view(-1)
+            test_loss += criterion(outputs, y_batch).item()
+        test_loss /= len(test_loader)
+        print(f"Test Loss: {test_loss:.4f}")
     # Print model summary (simple approach)
     print(model)
 
