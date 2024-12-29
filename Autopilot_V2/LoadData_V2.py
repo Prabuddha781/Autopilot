@@ -13,7 +13,7 @@ DATA_FOLDER = '/workspace'
 TRAIN_FILE = os.path.join(DATA_FOLDER, 'data.txt')
 
 def preprocess(img):
-    resized = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100))
+    resized = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV)), (100, 100))
     return resized
 
 def return_data():

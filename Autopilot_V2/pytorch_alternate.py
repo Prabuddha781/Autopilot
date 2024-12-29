@@ -27,7 +27,7 @@ class MyModel(nn.Module):
         # This structure must match your desired design
         self.net = nn.Sequential(
             LambdaLayer(lambda x: x/255 - 1),
-            nn.Conv2d(1, 32, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(3, 32, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(32, 32, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
