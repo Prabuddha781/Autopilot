@@ -30,7 +30,7 @@ def return_data():
             full_path = os.path.join(DATA_FOLDER + "/data", path)
             X.append(full_path)
             # using angles from -pi to pi to avoid rescaling the atan in the network
-            y.append(float(angle) * scipy.pi / 180)
+            y.append(float(angle) * scipy.constants.pi / 180)
 
     for i in range(len(X)):
         img = plt.imread(X[i])
