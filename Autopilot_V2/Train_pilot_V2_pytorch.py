@@ -13,23 +13,28 @@ def loadFromPickle():
         labels = pickle.load(f)
     return features, labels
 
+class Normalize(nn.Module):
+    def forward(self, x):
+        return x / 127.5 - 1.0
+
 class MyModel(nn.Module):
     def __init__(self, image_x=100, image_y=100):
         super(MyModel, self).__init__()
         # This structure must match your desired design
         self.net = nn.Sequential(
-            nn.Conv2d(1, 32, kernel_size=3, padding=1), nn.ReLU(),
+            Normalize(),
+            nn.Conv2d(3, 24, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(32, 32, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(24, 36, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(32, 64, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(36, 48, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(48, 64, kernel_size=3, stride=1, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(64, 128, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1), nn.ReLU(),
-            nn.MaxPool2d(2),
+            # nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=0), nn.ReLU(),
+            # nn.MaxPool2d(2),
             nn.Flatten(),
             nn.Dropout(0.5),
             nn.Linear(128 * (image_x // 64) * (image_y // 64), 1024),
@@ -68,7 +73,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     # Training loop
-    for epoch in range(10):
+    for epoch in range(20):
         model.train()
         for x_batch, y_batch in train_loader:
             x_batch, y_batch = x_batch.to(device), y_batch.to(device)
