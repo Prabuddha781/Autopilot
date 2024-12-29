@@ -80,7 +80,7 @@ if __name__ == "__main__":
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
-    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
+    train_loader = DataLoader(train_data, batch_size=32)
     test_loader  = DataLoader(test_data, batch_size=32)
 
     # Model setup
