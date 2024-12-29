@@ -26,11 +26,13 @@ class MyModel(nn.Module):
             nn.MaxPool2d(2),
             nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1), nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Flatten(),
             nn.Dropout(0.5),
-            nn.Linear(64 * (image_x // 64) * (image_y // 64), 1024),
+            nn.Linear(128 * (image_x // 64) * (image_y // 64), 1024),
             nn.Linear(1024, 256),
             nn.Linear(256, 64),
             nn.Linear(64, 1)
@@ -65,18 +67,20 @@ if __name__ == "__main__":
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+    i = 0
     # Training loop
-    for epoch in range(3):
+    for epoch in range(10):
         model.train()
         for x_batch, y_batch in train_loader:
             x_batch, y_batch = x_batch.to(device), y_batch.to(device)
             optimizer.zero_grad()
             outputs = model(x_batch).view(-1)
             loss = criterion(outputs, y_batch)
-            print(f"Epoch {epoch+1}, Loss: {loss.item():.4f}")
+            if i % 10 == 0:
+                print(f"Epoch {epoch+1}, Loss: {loss.item():.4f}")
             loss.backward()
             optimizer.step()
-
+            i += 1
         # Validation
         model.eval()
         val_loss = 0.0
