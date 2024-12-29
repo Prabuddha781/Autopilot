@@ -9,7 +9,7 @@ from itertools import islice
 
 LIMIT = None
 
-DATA_FOLDER = '/workspace/data'
+DATA_FOLDER = '/workspace'
 TRAIN_FILE = os.path.join(DATA_FOLDER, 'data.txt')
 
 def preprocess(img):
