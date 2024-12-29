@@ -68,7 +68,7 @@ if __name__ == "__main__":
     # Load, shuffle, split
     features, labels = loadFromPickle()
     train_x, test_x, train_y, test_y = train_test_split(
-        features, labels, random_state=0, test_size=0.3, shuffle=True
+        features, labels, random_state=0, test_size=0.3
     )
 
     # Reshape: (N, C, H, W) for PyTorch
