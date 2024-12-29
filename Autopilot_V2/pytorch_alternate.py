@@ -8,7 +8,7 @@ import pickle
 
 def loadFromPickle():
     with open("features", "rb") as f:
-        data = pickle.load(f)
+        features = pickle.load(f)
     with open("labels", "rb") as f:
         labels = pickle.load(f)
     return features, labels
