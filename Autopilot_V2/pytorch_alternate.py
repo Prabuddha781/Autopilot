@@ -59,8 +59,8 @@ if __name__ == "__main__":
     )
 
     # Reshape: (N, C, H, W) for PyTorch
-    train_x = torch.from_numpy(train_x.reshape(-1, 1, 100, 100)).float()
-    test_x  = torch.from_numpy(test_x.reshape(-1, 1, 100, 100)).float()
+    train_x = torch.from_numpy(train_x.reshape(-1, 3, 100, 100)).float()
+    test_x  = torch.from_numpy(test_x.reshape(-1, 3, 100, 100)).float()
     train_y = torch.from_numpy(train_y).float()
     test_y  = torch.from_numpy(test_y).float()
 
