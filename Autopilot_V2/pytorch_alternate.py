@@ -63,6 +63,8 @@ if __name__ == "__main__":
     train_y = torch.from_numpy(train_y).float()
     test_y  = torch.from_numpy(test_y).float()
 
+    print(train_x.shape, train_x[0])
+
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
