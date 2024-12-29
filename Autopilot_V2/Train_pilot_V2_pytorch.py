@@ -15,6 +15,7 @@ def loadFromPickle():
 
 class Normalize(nn.Module):
     def forward(self, x):
+        print(x.shape)
         return x / 127.5 - 1.0
 
 class MyModel(nn.Module):
