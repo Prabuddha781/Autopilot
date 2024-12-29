@@ -26,7 +26,7 @@ class MyModel(nn.Module):
         super(MyModel, self).__init__()
         # This structure must match your desired design
         self.net = nn.Sequential(
-            LambdaLayer(lambda x: x/122.5 - 1),
+            LambdaLayer(lambda x: x/255 - 1),
             nn.Conv2d(1, 32, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(32, 32, kernel_size=3, padding=1), nn.ReLU(),
@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     i = 0
     # Training loop
-    for epoch in range(10):
+    for epoch in range(30):
         model.train()
         for x_batch, y_batch in train_loader:
             x_batch, y_batch = x_batch.to(device), y_batch.to(device)
