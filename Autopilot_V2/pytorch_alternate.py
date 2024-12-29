@@ -58,8 +58,8 @@ if __name__ == "__main__":
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
-    train_loader = DataLoader(train_data, batch_size=2048, shuffle=True)
-    test_loader  = DataLoader(test_data, batch_size=2048)
+    train_loader = DataLoader(train_data, batch_size=3000, shuffle=True)
+    test_loader  = DataLoader(test_data, batch_size=3000)
 
     # Model setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
