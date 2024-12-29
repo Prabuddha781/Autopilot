@@ -24,7 +24,7 @@ def return_data():
 
     with open(TRAIN_FILE) as fp:
         for line in islice(fp, LIMIT):
-            print(line)
+            print(line.strip().split())
             path, angle = line.strip().split()
             full_path = os.path.join(DATA_FOLDER, path)
             X.append(full_path)
