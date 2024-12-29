@@ -30,7 +30,7 @@ class MyModel(nn.Module):
             nn.MaxPool2d(2),
             nn.Flatten(),
             nn.Dropout(0.5),
-            nn.Linear(128 * (image_x // 64) * (image_y // 64), 1024),
+            nn.Linear(64 * (image_x // 64) * (image_y // 64), 1024),
             nn.Linear(1024, 256),
             nn.Linear(256, 64),
             nn.Linear(64, 1)
