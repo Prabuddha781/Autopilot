@@ -62,8 +62,8 @@ if __name__ == "__main__":
         features, labels, random_state=0, test_size=0.3
     )
 
-    train_x = torch.from_numpy([transpose_data(x) for x in train_x]).float()
-    test_x  = torch.from_numpy([transpose_data(x) for x in test_x]).float()
+    train_x = torch.from_numpy(np.ndarray([transpose_data(x) for x in train_x])).float()
+    test_x  = torch.from_numpy(np.ndarray([transpose_data(x) for x in test_x])).float()
     train_y = torch.from_numpy(train_y).float()
     test_y  = torch.from_numpy(test_y).float()
 
