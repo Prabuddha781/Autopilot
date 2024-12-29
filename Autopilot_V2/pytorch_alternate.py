@@ -63,7 +63,9 @@ if __name__ == "__main__":
 
     # Model setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = MyModel(100, 100).to(device)
+    model = MyModel(100, 100)
+    model = torch.nn.DataParallel(model)
+    model.to(device)
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
