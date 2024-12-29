@@ -23,7 +23,6 @@ class MyModel(nn.Module):
         super(MyModel, self).__init__()
         # This structure must match your desired design
         self.net = nn.Sequential(
-            Normalize(),
             nn.Conv2d(1, 24, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(24, 36, kernel_size=5, stride=2, padding=0), nn.ReLU(),
