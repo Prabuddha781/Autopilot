@@ -15,7 +15,6 @@ def loadFromPickle():
 
 class Normalize(nn.Module):
     def forward(self, x):
-        print(x.shape)
         return x / 127.5 - 1.0
 
 class MyModel(nn.Module):
@@ -90,6 +89,7 @@ if __name__ == "__main__":
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+    i = 0
     # Training loop
     for epoch in range(20):
         model.train()
@@ -98,10 +98,11 @@ if __name__ == "__main__":
             optimizer.zero_grad()
             outputs = model(x_batch).view(-1)
             loss = criterion(outputs, y_batch)
-            print(f"Epoch {epoch+1}, Loss: {loss.item():.4f}")
+            if i % 100 == 0:
+                print(f"Epoch {epoch+1}, Loss: {loss.item():.4f}")
             loss.backward()
             optimizer.step()
-
+            i += 1
         # Validation
         model.eval()
         val_loss = 0.0
