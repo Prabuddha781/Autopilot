@@ -35,6 +35,8 @@ def return_data():
     for i in range(len(X)):
         img = plt.imread(X[i])
         features.append(preprocess(img))
+        if i % 17 == 0:
+            print(features[i].shape, features[i])
 
     features = np.array(features).astype('float32')
     labels = np.array(y).astype('float32')
