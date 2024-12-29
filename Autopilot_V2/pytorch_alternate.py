@@ -13,11 +13,20 @@ def loadFromPickle():
         labels = pickle.load(f)
     return features, labels
 
+class LambdaLayer(nn.Module):
+    def __init__(self, func):
+        super(LambdaLayer, self).__init__()
+        self.func = func
+
+    def forward(self, x):
+        return self.func(x)
+
 class MyModel(nn.Module):
     def __init__(self, image_x=100, image_y=100):
         super(MyModel, self).__init__()
         # This structure must match your desired design
         self.net = nn.Sequential(
+            LambdaLayer(lambda x: x/255 - 1),
             nn.Conv2d(1, 32, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(32, 32, kernel_size=3, padding=1), nn.ReLU(),
