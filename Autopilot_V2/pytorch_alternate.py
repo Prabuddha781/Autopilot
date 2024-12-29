@@ -49,7 +49,10 @@ class MyModel(nn.Module):
 
     def forward(self, x):
         return self.net(x)
-    
+
+def transpose_data(data):
+    return np.moveaxis(data, -1, 0)
+
 if __name__ == "__main__":
     # Load, shuffle, split
     features, labels = loadFromPickle()
@@ -59,11 +62,16 @@ if __name__ == "__main__":
         features, labels, random_state=0, test_size=0.3
     )
 
-    # Reshape: (N, C, H, W) for PyTorch
-    train_x = torch.from_numpy(train_x.reshape(-1, 100, 100, 3)).float()
-    test_x  = torch.from_numpy(test_x.reshape(-1, 100, 100, 3)).float()
+    train_x = torch.from_numpy([transpose_data(x) for x in train_x]).float()
+    test_x  = torch.from_numpy([transpose_data(x) for x in test_x]).float()
     train_y = torch.from_numpy(train_y).float()
     test_y  = torch.from_numpy(test_y).float()
+
+    # # Reshape: (N, C, H, W) for PyTorch
+    # train_x = torch.from_numpy(train_x.reshape(-1, 100, 100, 3)).float()
+    # test_x  = torch.from_numpy(test_x.reshape(-1, 100, 100, 3)).float()
+    # train_y = torch.from_numpy(train_y).float()
+    # test_y  = torch.from_numpy(test_y).float()
 
     print(train_x.shape, train_x[0])
 
