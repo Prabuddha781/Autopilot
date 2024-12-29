@@ -6,11 +6,11 @@ import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 import pickle
 
-def loadFromPickle(filename="data.pkl"):
-    with open(filename, "rb") as f:
+def loadFromPickle():
+    with open("features", "rb") as f:
         data = pickle.load(f)
-    features = data["features"]
-    labels = data["labels"]
+    with open("labels", "rb") as f:
+        labels = pickle.load(f)
     return features, labels
 
 class MyModel(nn.Module):
