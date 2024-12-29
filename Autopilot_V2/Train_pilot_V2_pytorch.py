@@ -23,7 +23,7 @@ class MyModel(nn.Module):
         super(MyModel, self).__init__()
         # This structure must match your desired design
         self.net = nn.Sequential(
-            nn.Conv2d(3, 24, kernel_size=5, stride=2, padding=0), nn.ReLU(),
+            nn.Conv2d(1, 24, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2, padding=0),
             nn.Conv2d(24, 36, kernel_size=5, stride=2, padding=0), nn.ReLU(),
             nn.MaxPool2d(2, padding=0),
@@ -33,8 +33,8 @@ class MyModel(nn.Module):
             nn.MaxPool2d(2, padding=0),
             nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=0), nn.ReLU(),
             nn.MaxPool2d(2, padding=0),
-            # nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=0), nn.ReLU(),
-            # nn.MaxPool2d(2),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=0), nn.ReLU(),
+            nn.MaxPool2d(2),
             nn.Flatten(),
             nn.Dropout(0.5),
             nn.Linear(128 * (image_x // 64) * (image_y // 64), 1024),
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     )
 
     # Reshape: (N, C, H, W) for PyTorch
-    train_x = torch.from_numpy(train_x.reshape(-1, 3, 100, 100)).float()
-    test_x  = torch.from_numpy(test_x.reshape(-1, 3, 100, 100)).float()
+    train_x = torch.from_numpy(train_x.reshape(-1, 1, 100, 100)).float()
+    test_x  = torch.from_numpy(test_x.reshape(-1, 1, 100, 100)).float()
     train_y = torch.from_numpy(train_y).float()
     test_y  = torch.from_numpy(test_y).float()
 
