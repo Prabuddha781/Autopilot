@@ -47,7 +47,7 @@ class MyModel(nn.Module):
         # Fully connected layers
         self.fc_layers = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(64 * 18 * 1, 1164),  # Adjust based on feature map size after conv layers
+            nn.Linear(1600, 1164),  # Adjust based on feature map size after conv layers
             nn.ReLU(),
             nn.Dropout(p=0.5),
             nn.Linear(1164, 100),
