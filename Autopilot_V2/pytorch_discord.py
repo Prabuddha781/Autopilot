@@ -72,9 +72,11 @@ def transpose_data(data):
 
 if __name__ == "__main__":
     # Load, shuffle, split
+    print("Loading data...")
     features, labels = loadFromPickle()
+    print("Shuffling data...")
     features, labels = shuffle(features, labels)
-
+    print("Splitting data...")
     train_x_ori, test_x, train_y_ori, test_y = train_test_split(
         features, labels, random_state=0, test_size=0.1
     )
