@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     print(train_x.shape, train_x[0])
 
-    batch_size = 32
+    batch_size = 3000
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
