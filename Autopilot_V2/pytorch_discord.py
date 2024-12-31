@@ -99,13 +99,14 @@ if __name__ == "__main__":
 
     print(train_x.shape, train_x[0])
 
+    batch_size = 32
     # Datasets and loaders
     train_data = TensorDataset(train_x, train_y)
     test_data  = TensorDataset(test_x, test_y)
     val_data   = TensorDataset(val_x, val_y)
-    train_loader = DataLoader(train_data, batch_size=3000, shuffle=True)
-    test_loader  = DataLoader(test_data, batch_size=3000)
-    val_loader   = DataLoader(val_data, batch_size=3000)
+    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
+    test_loader  = DataLoader(test_data, batch_size=batch_size)
+    val_loader   = DataLoader(val_data, batch_size=batch_size)
 
     # Model setup
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
